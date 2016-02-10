@@ -26,13 +26,10 @@ package com.nordicsemi.nrfUARTv2;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.Date;
-
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -75,6 +72,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private ArrayAdapter<String> listAdapter;
     private Button btnConnectDisconnect,btnBack,btnSend;
     private EditText edtMessage;
+    private String voltText;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +93,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         btnSend=(Button) findViewById(R.id.sendButton);
         edtMessage = (EditText) findViewById(R.id.sendText);
         service_init();
-
 
 
         // Handle Disconnect & Connect button
@@ -126,28 +124,26 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         });
         // Handle Send button
 
-       btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent btnBack = new Intent(MainActivity.this, Home.class);
-                startActivity(btnBack);
-            }
-        });
-
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editText = (EditText) findViewById(R.id.sendText);
-                String message = editText.getText().toString();
+
+              /*
+                Intent intent = getIntent();
+                String voltText = intent.getStringExtra("volt_variable");
+                EditText editText  = (EditText) findViewById(R.id.sendText);
+                editText.setText(voltText);
+                */
+
                 byte[] value;
                 try {
                     //send data to service
-                    value = message.getBytes("UTF-8");
+                    value = voltText.getBytes("UTF-8");
                     mService.writeRXCharacteristic(value);
                     //Update the log with time stamp
                     String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
-                    listAdapter.add("["+currentDateTimeString+"] TX: "+ message);
+                    listAdapter.add("["+currentDateTimeString+"] TX: "+ voltText);
                     messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
                     edtMessage.setText("");
                 } catch (UnsupportedEncodingException e) {
@@ -170,6 +166,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             if (!mService.initialize()) {
                 Log.e(TAG, "Unable to initialize Bluetooth");
                 finish();
+            }
+
+            else {
+                Home.uartService = mService;
             }
 
         }
@@ -219,8 +219,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                         String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
                         Log.d(TAG, "UART_DISCONNECT_MSG");
                         btnConnectDisconnect.setText("Connect");
-                        edtMessage.setEnabled(false);
-                        btnSend.setEnabled(false);
+                        edtMessage.setEnabled(true);
+                        btnSend.setEnabled(true);
                         ((TextView) findViewById(R.id.deviceName)).setText("Not Connected");
                         listAdapter.add("["+currentDateTimeString+"] Disconnected to: "+ mDevice.getName());
                         mState = UART_PROFILE_DISCONNECTED;
@@ -375,11 +375,17 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
     }
 
-
     private void showMessage(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
     }
+
+    public void btnBack(View view) {
+        Intent myIntent = new Intent(MainActivity.this, Home.class);
+        myIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(myIntent);
+    }
+
 
     @Override
     public void onBackPressed() {

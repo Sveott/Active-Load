@@ -70,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text="Back to home"
                 android:id="@+id/btnBack"
+                android:onClick="btnBack"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true" />
