@@ -90,7 +90,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         messageListView.setDivider(null);
         btnConnectDisconnect=(Button) findViewById(R.id.btn_select);
         btnBack=(Button) findViewById(R.id.btnBack);
-        btnSend=(Button) findViewById(R.id.sendButton);
+        btnSend=(Button) findViewById(R.id.sendButtonVolt);
         edtMessage = (EditText) findViewById(R.id.sendText);
         service_init();
 

@@ -9,18 +9,19 @@
         android:text="Select device"
         android:id="@+id/selectDevice"
         android:onClick="start"
-        android:layout_above="@+id/sendButton"
+        android:layout_above="@+id/sendButtonVolt"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send values"
-        android:id="@+id/sendButton"
-        android:layout_alignParentBottom="true"
+        android:text="Set volt"
+        android:id="@+id/sendButtonVolt"
         android:onClick="sendVolt"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp" />
+        android:layout_marginBottom="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/textVolt"
+        android:layout_marginEnd="41dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -58,5 +59,15 @@
         android:layout_below="@+id/ampText"
         android:layout_centerHorizontal="true"
         android:hint="Set value" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set ampere"
+        android:id="@+id/sendButtonAmp"
+        android:onClick="sendAmp"
+        android:layout_below="@+id/selectDevice"
+        android:layout_alignStart="@+id/textVolt"
+        android:layout_marginStart="29dp" />
 
 </RelativeLayout>

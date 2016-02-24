@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/sendButton"
+                android:layout_toLeftOf="@+id/sendButtonVolt"
                 android:ems="10"
                 android:enabled="false"
                 android:fontFamily="1"
@@ -51,13 +51,13 @@
                 android:id="@+id/listMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/sendButton"
+                android:layout_above="@+id/sendButtonVolt"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/btnback">
             </ListView>
 
             <Button
-                android:id="@+id/sendButton"
+                android:id="@+id/sendButtonVolt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
